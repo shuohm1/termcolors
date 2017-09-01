@@ -3,18 +3,20 @@
 
 from __future__ import print_function
 
-BREAKS = 8
 DEFAULTS = 16
+DEF_BREAKS = 8
 
 RGB_MAX = 2 ** 8 - 1
 RGB_GRADS = 6
 RGB_BASE = 55
 RGB_STEP = (RGB_MAX - RGB_BASE) // (RGB_GRADS - 1)
+RGB_BREAKS = RGB_GRADS
 
 GRAY_MAX = 2 ** 8 - 18
 GRAY_GRADS = 24
 GRAY_BASE = 8
 GRAY_STEP = (GRAY_MAX - GRAY_BASE) // (GRAY_GRADS - 1)
+GRAY_BREAKS = DEF_BREAKS
 
 def rgb_range(grads):
 	for i in range(grads):
@@ -47,7 +49,7 @@ t = s.format(e="\033")
 h = "******"
 for c in range(DEFAULTS):
 	print(t.format(code=c, hexs=h), end="")
-	if c % BREAKS != BREAKS - 1:
+	if c % DEF_BREAKS != DEF_BREAKS - 1:
 		print(" ", end="")
 	else:
 		print()
@@ -59,7 +61,7 @@ for i, r in rgb_range(RGB_GRADS):
 			c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
 			h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
 			print(t.format(code=c, hexs=h), end="")
-			if c % BREAKS != BREAKS - 1:
+			if (c - base) % RGB_BREAKS != RGB_BREAKS - 1:
 				print(" ", end="")
 			else:
 				print()
@@ -69,7 +71,7 @@ for i, k in gray_range(GRAY_GRADS):
 	c = base + i
 	h = "{k:02x}{k:02x}{k:02x}".format(k=k)
 	print(t.format(code=c, hexs=h), end="")
-	if c % BREAKS != BREAKS - 1:
+	if (c - base) % GRAY_BREAKS != GRAY_BREAKS - 1:
 		print(" ", end="")
 	else:
 		print()
