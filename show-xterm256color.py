@@ -49,7 +49,7 @@ t = s.format(e="\033")
 h = "******"
 for c in range(DEFAULTS):
 	print(t.format(code=c, hexs=h), end="")
-	if c % DEF_BREAKS != DEF_BREAKS - 1:
+	if (c + 1) % DEF_BREAKS > 0:
 		print(" ", end="")
 	else:
 		print()
@@ -61,7 +61,7 @@ for i, r in rgb_range(RGB_GRADS):
 			c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
 			h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
 			print(t.format(code=c, hexs=h), end="")
-			if (c - base) % RGB_BREAKS != RGB_BREAKS - 1:
+			if (c - base + 1) % RGB_BREAKS > 0:
 				print(" ", end="")
 			else:
 				print()
@@ -71,7 +71,7 @@ for i, k in gray_range(GRAY_GRADS):
 	c = base + i
 	h = "{k:02x}{k:02x}{k:02x}".format(k=k)
 	print(t.format(code=c, hexs=h), end="")
-	if (c - base) % GRAY_BREAKS != GRAY_BREAKS - 1:
+	if (c - base + 1) % GRAY_BREAKS > 0:
 		print(" ", end="")
 	else:
 		print()
