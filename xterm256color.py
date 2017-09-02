@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import argparse
 import sys
 
 DEFAULTS = 16
@@ -20,6 +21,15 @@ GRAY_BASE = 8
 GRAY_STEP = (GRAY_MAX - GRAY_BASE) // (GRAY_GRADS - 1)
 GRAY_BREAKS = DEF_BREAKS
 
+DESCRIPTION = "Show default colors of 'xterm-256color'."
+EPILOG = """
+This script shows color codes in the form of 'xx#rrggbb'.
+The 'xx' represents an indexed color code,
+and the 'rrggbb' represents a RGB color code.
+Note: if you changed color-pallet settings,
+indexed color codes and RGB color codes are not correspond.
+"""
+
 def rgb_range(grads):
 	for i in range(grads):
 		x = i * RGB_STEP
@@ -32,20 +42,6 @@ def gray_range(grads):
 		yield (i, i * GRAY_STEP + GRAY_BASE)
 
 def main():
-	print("""
-***********************************************************************
-
-This script shows default 256 colors of 'xterm-256colors'. If you
-changed color-pallet settings, indexed color codes and RGB color codes
-are not correspond.
-
-xx#rrggbb
-|    \\_ a RGB color code
-\\_ an indexed color code
-
-***********************************************************************
-	""".strip())
-
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
 
@@ -82,5 +78,10 @@ xx#rrggbb
 
 	return 0
 
+def parse(argv):
+	parser = argparse.ArgumentParser(description=DESCRIPTION,
+	                                 epilog=EPILOG)
+	return parser.parse_args(argv)
+
 if __name__ == "__main__":
-	sys.exit(main())
+	sys.exit(main(**vars(parse(sys.argv[1:]))))
