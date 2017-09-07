@@ -44,6 +44,7 @@ def gray_range(grads):
 def main(show_basic=False, show_rgb=False, show_gray=False):
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
+	base = 0
 
 	h = "******"
 	for c in range(DEFAULTS):
@@ -54,7 +55,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 			print(" ", end="")
 		else:
 			print()
-	base = c + 1
+	base += DEFAULTS
 
 	for i, r in rgb_range(RGB_GRADS):
 		for j, g in rgb_range(RGB_GRADS):
@@ -68,7 +69,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 					print(" ", end="")
 				else:
 					print()
-	base = c + 1
+	base += RGB_GRADS ** 3
 
 	for i, k in gray_range(GRAY_GRADS):
 		c = base + i
@@ -80,7 +81,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 			print(" ", end="")
 		else:
 			print()
-	base = c + 1
+	base += GRAY_GRADS
 
 	return 0
 
