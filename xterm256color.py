@@ -46,9 +46,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 	t = s.format(e="\033")
 	base = 0
 
-	if not show_basic and (show_rgb or show_gray):
-		pass
-	else:
+	if show_basic or not (show_rgb or show_gray):
 		h = "******"
 		for c in range(DEFAULTS):
 			print(t.format(code=c, hexs=h), end="")
@@ -58,9 +56,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 				print()
 	base += DEFAULTS
 
-	if not show_rgb and (show_basic or show_gray):
-		pass
-	else:
+	if show_rgb or not (show_basic or show_gray):
 		for i, r in rgb_range(RGB_GRADS):
 			for j, g in rgb_range(RGB_GRADS):
 				for k, b in rgb_range(RGB_GRADS):
@@ -73,9 +69,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 						print()
 	base += RGB_GRADS ** 3
 
-	if not show_gray and (show_basic or show_rgb):
-		pass
-	else:
+	if show_gray or not (show_basic or show_rgb):
 		for i, k in gray_range(GRAY_GRADS):
 			c = base + i
 			h = "{k:02x}{k:02x}{k:02x}".format(k=k)
