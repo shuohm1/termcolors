@@ -46,41 +46,44 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 	t = s.format(e="\033")
 	base = 0
 
-	h = "******"
-	for c in range(DEFAULTS):
-		if not show_basic and (show_rgb or show_gray):
-			continue
-		print(t.format(code=c, hexs=h), end="")
-		if (c + 1) % DEF_BREAKS > 0:
-			print(" ", end="")
-		else:
-			print()
+	if not show_basic and (show_rgb or show_gray):
+		pass
+	else:
+		h = "******"
+		for c in range(DEFAULTS):
+			print(t.format(code=c, hexs=h), end="")
+			if (c + 1) % DEF_BREAKS > 0:
+				print(" ", end="")
+			else:
+				print()
 	base += DEFAULTS
 
-	for i, r in rgb_range(RGB_GRADS):
-		for j, g in rgb_range(RGB_GRADS):
-			for k, b in rgb_range(RGB_GRADS):
-				c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
-				if not show_rgb and (show_basic or show_gray):
-					continue
-				h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
-				print(t.format(code=c, hexs=h), end="")
-				if (c - base + 1) % RGB_BREAKS > 0:
-					print(" ", end="")
-				else:
-					print()
+	if not show_rgb and (show_basic or show_gray):
+		pass
+	else:
+		for i, r in rgb_range(RGB_GRADS):
+			for j, g in rgb_range(RGB_GRADS):
+				for k, b in rgb_range(RGB_GRADS):
+					c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
+					h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
+					print(t.format(code=c, hexs=h), end="")
+					if (c - base + 1) % RGB_BREAKS > 0:
+						print(" ", end="")
+					else:
+						print()
 	base += RGB_GRADS ** 3
 
-	for i, k in gray_range(GRAY_GRADS):
-		c = base + i
-		if not show_gray and (show_basic or show_rgb):
-			continue
-		h = "{k:02x}{k:02x}{k:02x}".format(k=k)
-		print(t.format(code=c, hexs=h), end="")
-		if (c - base + 1) % GRAY_BREAKS > 0:
-			print(" ", end="")
-		else:
-			print()
+	if not show_gray and (show_basic or show_rgb):
+		pass
+	else:
+		for i, k in gray_range(GRAY_GRADS):
+			c = base + i
+			h = "{k:02x}{k:02x}{k:02x}".format(k=k)
+			print(t.format(code=c, hexs=h), end="")
+			if (c - base + 1) % GRAY_BREAKS > 0:
+				print(" ", end="")
+			else:
+				print()
 	base += GRAY_GRADS
 
 	return 0
