@@ -54,36 +54,42 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 
 	if show_basic or show_all:
 		h = "******"
+		basic_codes = []
+		basic_codelines = []
 		for c in range(DEFAULTS):
-			print(t.format(code=c, hexs=h), end="")
-			if (c + 1) % DEF_BREAKS > 0:
-				print(" ", end="")
-			else:
-				print()
+			basic_codes.append(t.format(code=c, hexs=h))
+			if (c + 1) % DEF_BREAKS == 0:
+				basic_codelines.append(basic_codes)
+				basic_codes = []
+		print_codes(basic_codelines)
 	base += DEFAULTS
 
 	if show_rgb or show_all:
+		colorful_codes = []
+		colorful_codelines = []
 		for i, r in rgb_range(RGB_GRADS):
 			for j, g in rgb_range(RGB_GRADS):
 				for k, b in rgb_range(RGB_GRADS):
 					c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
 					h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
-					print(t.format(code=c, hexs=h), end="")
-					if (c - base + 1) % RGB_BREAKS > 0:
-						print(" ", end="")
-					else:
-						print()
+					colorful_codes.append(t.format(code=c, hexs=h))
+					if (c - base + 1) % RGB_BREAKS == 0:
+						colorful_codelines.append(colorful_codes)
+						colorful_codes = []
+		print_codes(colorful_codelines)
 	base += RGB_GRADS ** 3
 
 	if show_gray or show_all:
+		gray_codes = []
+		gray_codelines = []
 		for i, k in gray_range(GRAY_GRADS):
 			c = base + i
 			h = "{k:02x}{k:02x}{k:02x}".format(k=k)
-			print(t.format(code=c, hexs=h), end="")
-			if (c - base + 1) % GRAY_BREAKS > 0:
-				print(" ", end="")
-			else:
-				print()
+			gray_codes.append(t.format(code=c, hexs=h))
+			if (c - base + 1) % GRAY_BREAKS == 0:
+				gray_codelines.append(gray_codes)
+				gray_codes = []
+		print_codes(gray_codelines)
 	base += GRAY_GRADS
 
 	return 0
