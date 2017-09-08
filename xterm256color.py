@@ -46,11 +46,13 @@ def print_codes(codelines):
 		print(" ".join(codes))
 
 def main(show_basic=False, show_rgb=False, show_gray=False):
+	show_all = not (show_basic or show_rgb or show_gray)
+
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
 	base = 0
 
-	if show_basic or not (show_rgb or show_gray):
+	if show_basic or show_all:
 		h = "******"
 		for c in range(DEFAULTS):
 			print(t.format(code=c, hexs=h), end="")
@@ -60,7 +62,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 				print()
 	base += DEFAULTS
 
-	if show_rgb or not (show_basic or show_gray):
+	if show_rgb or show_all:
 		for i, r in rgb_range(RGB_GRADS):
 			for j, g in rgb_range(RGB_GRADS):
 				for k, b in rgb_range(RGB_GRADS):
@@ -73,7 +75,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 						print()
 	base += RGB_GRADS ** 3
 
-	if show_gray or not (show_basic or show_rgb):
+	if show_gray or show_all:
 		for i, k in gray_range(GRAY_GRADS):
 			c = base + i
 			h = "{k:02x}{k:02x}{k:02x}".format(k=k)
