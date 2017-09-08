@@ -41,6 +41,10 @@ def gray_range(grads):
 	for i in range(grads):
 		yield (i, i * GRAY_STEP + GRAY_BASE)
 
+def print_codes(codelines):
+	for codes in codelines:
+		print(" ".join(codes))
+
 def main(show_basic=False, show_rgb=False, show_gray=False):
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
