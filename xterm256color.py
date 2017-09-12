@@ -41,6 +41,10 @@ def gray_range(grads):
 	for i in range(grads):
 		yield (i, i * GRAY_STEP + GRAY_BASE)
 
+def print_codes(codes, breaks):
+	print_codelines(codes[i:i + breaks]
+	                for i in range(0, len(codes), breaks))
+
 def print_codelines(lines):
 	for codes in lines:
 		print(" ".join(codes))
@@ -54,42 +58,28 @@ def main(show_basic=False, show_colorful=False, show_gray=False):
 
 	if show_basic or show_all:
 		h = "******"
-		basic_codes = []
-		basic_codelines = []
-		for c in range(DEFAULTS):
-			basic_codes.append(t.format(code=c, hexs=h))
-			if (c + 1) % DEF_BREAKS == 0:
-				basic_codelines.append(basic_codes)
-				basic_codes = []
-		print_codelines(basic_codelines)
+		basic_codes = [t.format(code=c, hexs=h) for c in range(DEFAULTS)]
+		print_codes(basic_codes, DEF_BREAKS)
 	base += DEFAULTS
 
 	if show_colorful or show_all:
 		colorful_codes = []
-		colorful_codelines = []
 		for i, r in rgb_range(RGB_GRADS):
 			for j, g in rgb_range(RGB_GRADS):
 				for k, b in rgb_range(RGB_GRADS):
 					c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
 					h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
 					colorful_codes.append(t.format(code=c, hexs=h))
-					if (c - base + 1) % RGB_BREAKS == 0:
-						colorful_codelines.append(colorful_codes)
-						colorful_codes = []
-		print_codelines(colorful_codelines)
+		print_codes(colorful_codes, RGB_BREAKS)
 	base += RGB_GRADS ** 3
 
 	if show_gray or show_all:
 		gray_codes = []
-		gray_codelines = []
 		for i, k in gray_range(GRAY_GRADS):
 			c = base + i
 			h = "{k:02x}{k:02x}{k:02x}".format(k=k)
 			gray_codes.append(t.format(code=c, hexs=h))
-			if (c - base + 1) % GRAY_BREAKS == 0:
-				gray_codelines.append(gray_codes)
-				gray_codes = []
-		print_codelines(gray_codelines)
+		print_codes(gray_codes, GRAY_BREAKS)
 	base += GRAY_GRADS
 
 	return 0
