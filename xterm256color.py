@@ -45,8 +45,8 @@ def print_codes(codelines):
 	for codes in codelines:
 		print(" ".join(codes))
 
-def main(show_basic=False, show_rgb=False, show_gray=False):
-	show_all = not (show_basic or show_rgb or show_gray)
+def main(show_basic=False, show_colorful=False, show_gray=False):
+	show_all = not (show_basic or show_colorful or show_gray)
 
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
@@ -64,7 +64,7 @@ def main(show_basic=False, show_rgb=False, show_gray=False):
 		print_codes(basic_codelines)
 	base += DEFAULTS
 
-	if show_rgb or show_all:
+	if show_colorful or show_all:
 		colorful_codes = []
 		colorful_codelines = []
 		for i, r in rgb_range(RGB_GRADS):
@@ -100,7 +100,7 @@ def parse(argv):
 	parser.add_argument("-b", "--basic", dest="show_basic",
 	                    action="store_true", default=False,
 	                    help="show basic color codes")
-	parser.add_argument("-c", "--rgb", dest="show_rgb",
+	parser.add_argument("-c", "--colorful", dest="show_colorful",
 	                    action="store_true", default=False,
 	                    help="show RGB color codes")
 	parser.add_argument("-g", "--gray", dest="show_gray",
