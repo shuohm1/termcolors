@@ -41,8 +41,8 @@ def gray_range(grads):
 	for i in range(grads):
 		yield (i, i * GRAY_STEP + GRAY_BASE)
 
-def print_codes(codelines):
-	for codes in codelines:
+def print_codelines(lines):
+	for codes in lines:
 		print(" ".join(codes))
 
 def main(show_basic=False, show_colorful=False, show_gray=False):
@@ -61,7 +61,7 @@ def main(show_basic=False, show_colorful=False, show_gray=False):
 			if (c + 1) % DEF_BREAKS == 0:
 				basic_codelines.append(basic_codes)
 				basic_codes = []
-		print_codes(basic_codelines)
+		print_codelines(basic_codelines)
 	base += DEFAULTS
 
 	if show_colorful or show_all:
@@ -76,7 +76,7 @@ def main(show_basic=False, show_colorful=False, show_gray=False):
 					if (c - base + 1) % RGB_BREAKS == 0:
 						colorful_codelines.append(colorful_codes)
 						colorful_codes = []
-		print_codes(colorful_codelines)
+		print_codelines(colorful_codelines)
 	base += RGB_GRADS ** 3
 
 	if show_gray or show_all:
@@ -89,7 +89,7 @@ def main(show_basic=False, show_colorful=False, show_gray=False):
 			if (c - base + 1) % GRAY_BREAKS == 0:
 				gray_codelines.append(gray_codes)
 				gray_codes = []
-		print_codes(gray_codelines)
+		print_codelines(gray_codelines)
 	base += GRAY_GRADS
 
 	return 0
