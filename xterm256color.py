@@ -31,11 +31,9 @@ indexed color codes and RGB color codes are not correspond.
 """
 
 def rgb_range(grads):
-	for i in range(grads):
-		x = i * RGB_STEP
-		if i > 0:
-			x += RGB_BIAS
-		yield (i, x)
+	yield (0, 0)
+	for i in range(1, grads):
+		yield (i, i * RGB_STEP + RGB_BIAS)
 
 def gray_range(grads):
 	for i in range(grads):
