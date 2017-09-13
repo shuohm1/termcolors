@@ -11,8 +11,8 @@ DEF_BREAKS = 8
 
 RGB_MAX = 2 ** 8 - 1
 RGB_GRADS = 6
-RGB_BASE = 55
-RGB_STEP = (RGB_MAX - RGB_BASE) // (RGB_GRADS - 1)
+RGB_BIAS = 55
+RGB_STEP = (RGB_MAX - RGB_BIAS) // (RGB_GRADS - 1)
 RGB_BREAKS = RGB_GRADS
 
 GRAY_MAX = 2 ** 8 - 18
@@ -34,7 +34,7 @@ def rgb_range(grads):
 	for i in range(grads):
 		x = i * RGB_STEP
 		if i > 0:
-			x += RGB_BASE
+			x += RGB_BIAS
 		yield (i, x)
 
 def gray_range(grads):
