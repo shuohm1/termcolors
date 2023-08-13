@@ -41,12 +41,14 @@ def gray_range(grads):
 	for i in range(grads):
 		yield (i, i * GRAY_STEP + GRAY_BASE)
 
-def main():
+def main(show_basic=False, show_rgb=False, show_gray=False):
 	s = "{e}[38;5;{{code:d}}m{{code:02x}}#{{hexs}}{e}[m"
 	t = s.format(e="\033")
 
 	h = "******"
 	for c in range(DEFAULTS):
+		if not show_basic and (show_rgb or show_gray):
+			continue
 		print(t.format(code=c, hexs=h), end="")
 		if (c + 1) % DEF_BREAKS > 0:
 			print(" ", end="")
@@ -58,6 +60,8 @@ def main():
 		for j, g in rgb_range(RGB_GRADS):
 			for k, b in rgb_range(RGB_GRADS):
 				c = base + i * RGB_GRADS ** 2 + j * RGB_GRADS + k
+				if not show_rgb and (show_basic or show_gray):
+					continue
 				h = "{r:02x}{g:02x}{b:02x}".format(r=r, g=g, b=b)
 				print(t.format(code=c, hexs=h), end="")
 				if (c - base + 1) % RGB_BREAKS > 0:
@@ -68,6 +72,8 @@ def main():
 
 	for i, k in gray_range(GRAY_GRADS):
 		c = base + i
+		if not show_gray and (show_basic or show_rgb):
+			continue
 		h = "{k:02x}{k:02x}{k:02x}".format(k=k)
 		print(t.format(code=c, hexs=h), end="")
 		if (c - base + 1) % GRAY_BREAKS > 0:
@@ -81,6 +87,15 @@ def main():
 def parse(argv):
 	parser = argparse.ArgumentParser(description=DESCRIPTION,
 	                                 epilog=EPILOG)
+	parser.add_argument("-b", "--basic", dest="show_basic",
+	                    action="store_true", default=False,
+	                    help="show basic color codes")
+	parser.add_argument("-c", "--rgb", dest="show_rgb",
+	                    action="store_true", default=False,
+	                    help="show RGB color codes")
+	parser.add_argument("-g", "--gray", dest="show_gray",
+	                    action="store_true", default=False,
+	                    help="show gray color codes")
 	return parser.parse_args(argv)
 
 if __name__ == "__main__":
