@@ -1,0 +1,5 @@
+# Compile this file with `tic filename'.
+# Note: a TERMINFO environment variable is set, a compiled file will be
+# put on a directory specified with the TERMINFO.
+screen-256color|GNU Screen with 256 colors,
+	use=xterm-256color,
